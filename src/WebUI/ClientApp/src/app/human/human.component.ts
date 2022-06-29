@@ -13,7 +13,6 @@ export class HumanComponent implements OnInit {
     "Lastname": new FormControl(),
     "MiddleName": new FormControl(),
     "PassportNumber": new FormControl(),
-    "FromWho": new FormControl(),
     "SocialCardNumber": new FormControl(),
     "BirthDate": new FormControl(),
     "Gender": new FormControl(),

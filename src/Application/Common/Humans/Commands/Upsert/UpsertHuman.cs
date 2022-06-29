@@ -14,7 +14,6 @@ namespace CleanArchitecture.Common.Humans.Commands.Upsert
         public string Lastname { get; set; }
         public string MiddleName { get; set; }
         public string PassportNumber { get; set; }
-        public string FromWho { set; get; }
         public string SocialCardNumber { get; set; }
         public DateTime BirthDate { get; set; }
         public Gender Gender { get; set; }
@@ -49,11 +48,10 @@ namespace CleanArchitecture.Common.Humans.Commands.Upsert
             
             human.Firstname = request.Firstname;
             human.Lastname = request.Lastname;
-            human.Middlename = request.Middlename;
+            human.Middlename = request.MiddleName;
             human.PassportNumber = request.PassportNumber;
             human.BirthDate = Convert.ToDateTime(request.BirthDate);
             human.Gender = request.Gender;
-            human.FromWho = request.FromWho;
             human.SocialCardNumber = request.SocialCardNumber;
 
             await _mediator.Send(human, token);
