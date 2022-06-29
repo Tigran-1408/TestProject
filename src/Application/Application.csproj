@@ -13,10 +13,22 @@
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.4" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Humans" />
+      <Folder Include="Common\Humans\Commands\Delete" />
+      <Folder Include="Common\Humans\Queries\Common" />
+      <Folder Include="Common\Humans\Queries\GetAll" />
+      <Folder Include="Common\Humans\Queries\GetById" />
     </ItemGroup>
 
 </Project>
