@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HumanComponent} from "./human/human.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -39,6 +40,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatFormFieldModule,
     ApiAuthorizationModule,
     AppRoutingModule,
+    MatInputModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     ReactiveFormsModule,

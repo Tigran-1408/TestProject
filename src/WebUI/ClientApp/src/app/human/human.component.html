@@ -1,27 +1,31 @@
-<form [formGroup]="myForm">
-  <mat-form-field appearance="fill" formControlName="Firstname">
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
+<form [formGroup]="this.myForm" (ngSubmit)="submit()" >
 
-  <mat-form-field appearance="fill" formControlName="Lastname">
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
+  <label>Имя</label>
+  <input class="form-control" name="name" formControlName="Firstname" />
 
-  <mat-form-field appearance="fill" formControlName="MiddleName">
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
 
-  <mat-form-field appearance="fill" formControlName="MiddleName">
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
+<!--  <mat-form-field appearance="fill" formControlName="Lastname">-->
+<!--    <mat-label>Input</mat-label>-->
+<!--    <input matInput>-->
+<!--  </mat-form-field>-->
 
-  <mat-form-field appearance="fill" formControlName="MiddleName">
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
+<!--  <mat-form-field appearance="fill" formControlName="MiddleName">-->
+<!--    <mat-label>Input</mat-label>-->
+<!--    <input matInput>-->
+<!--  </mat-form-field>-->
+
+<!--  <button type="submit"></button>-->
+
+<!--  <mat-form-field appearance="fill" formControlName="MiddleName">-->
+<!--    <mat-label>Input</mat-label>-->
+<!--    <input matInput>-->
+<!--  </mat-form-field>-->
+
+<!--  <mat-form-field appearance="fill" formControlName="MiddleName">-->
+<!--    <mat-label>Input</mat-label>-->
+<!--    <input matInput>-->
+<!--  </mat-form-field>-->
+
+  <button mat-raised-button type="submit" class="custom-primary-btn mr-3">Պահպանել</button>
 
 </form>
