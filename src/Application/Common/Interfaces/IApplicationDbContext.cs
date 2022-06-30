@@ -10,6 +10,8 @@ public interface IApplicationDbContext
     DbSet<TodoItem> TodoItems { get; }
     public DbSet<Human> Humans { get; set; }
 
-
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task BeginTransactionAsync();
+    Task CommitTransactionAsync();
+    Task<int> SaveChangesAsync(CancellationToken token);
+    
 }

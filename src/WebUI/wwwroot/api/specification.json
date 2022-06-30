@@ -106,12 +106,30 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
+        }
+      }
+    },
+    "/api/Human": {
+      "get": {
+        "tags": [
+          "Human"
+        ],
+        "operationId": "Human_GetAll",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HumanDTO"
+                  }
+                }
+              }
+            }
           }
-        ]
+        }
       }
     },
     "/api/TodoItems": {
@@ -653,6 +671,38 @@
           1,
           2
         ]
+      },
+      "HumanDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "middlename": {
+            "type": "string"
+          },
+          "passportNumber": {
+            "type": "string"
+          },
+          "socialCardNumber": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          }
+        }
       },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",

@@ -26,8 +26,6 @@
     <ItemGroup>
       <Folder Include="Common\Humans" />
       <Folder Include="Common\Humans\Commands\Delete" />
-      <Folder Include="Common\Humans\Queries\Common" />
-      <Folder Include="Common\Humans\Queries\GetAll" />
       <Folder Include="Common\Humans\Queries\GetById" />
     </ItemGroup>
 

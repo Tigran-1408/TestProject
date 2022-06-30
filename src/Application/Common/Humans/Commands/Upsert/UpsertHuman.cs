@@ -19,12 +19,12 @@ namespace CleanArchitecture.Common.Humans.Commands.Upsert
         public Gender Gender { get; set; }
     }
 
-    public class UpsertHumanHandler : IRequestHandler<UpsertHuman, Result>
+    public class Handler : IRequestHandler<UpsertHuman, Result>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMediator _mediator;
 
-        public UpsertHumanHandler(IApplicationDbContext context, IMediator mediator)
+        public Handler(IApplicationDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
@@ -32,9 +32,9 @@ namespace CleanArchitecture.Common.Humans.Commands.Upsert
 
         public async Task<Result> Handle(UpsertHuman request, CancellationToken token)
         {
-
-
+            
             Human human = new Human();
+            
             if (request.Id == Guid.Empty)
             {
                 _context.Humans.Add(human);
@@ -53,8 +53,6 @@ namespace CleanArchitecture.Common.Humans.Commands.Upsert
             human.BirthDate = Convert.ToDateTime(request.BirthDate);
             human.Gender = request.Gender;
             human.SocialCardNumber = request.SocialCardNumber;
-
-            await _mediator.Send(human, token);
 
             await _context.SaveChangesAsync(token);
             return Result.Success();
