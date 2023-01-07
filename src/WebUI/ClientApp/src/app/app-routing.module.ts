@@ -7,9 +7,16 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { TodoComponent } from './todo/todo.component';
 import { TokenComponent } from './token/token.component';
 import {HumanComponent} from "./human/human.component";
+import {CardComponent} from "./card/card.component";
+import {CardsComponent} from "./card/cards/cards.component";
+import {CardFormComponent} from "./card/card.form/card.form.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'card', component: CardComponent, children: [
+      { path: 'cards', component: CardsComponent},
+      { path: 'cards-form', component: CardFormComponent}
+    ]},
   { path: 'HumanComponent', component: HumanComponent},
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },

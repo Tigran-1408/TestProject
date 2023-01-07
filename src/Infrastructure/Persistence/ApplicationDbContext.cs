@@ -37,8 +37,10 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<Human> Humans { get; set; }
     
-    
-    
+    public DbSet<Dog> Dogs { get; set; }
+
+
+
     public async Task BeginTransactionAsync()
     {
         if (_currentTransaction != null)

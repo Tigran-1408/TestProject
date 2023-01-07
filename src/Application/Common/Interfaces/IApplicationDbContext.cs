@@ -9,6 +9,7 @@ public interface IApplicationDbContext
 
     DbSet<TodoItem> TodoItems { get; }
     public DbSet<Human> Humans { get; set; }
+    public DbSet<Dog> Dogs { get; set; }
 
     Task BeginTransactionAsync();
     Task CommitTransactionAsync();

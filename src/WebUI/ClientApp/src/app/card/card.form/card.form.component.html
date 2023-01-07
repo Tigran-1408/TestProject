@@ -1,0 +1,49 @@
+<h2 class="text-center">Form to fill out the card</h2>
+
+<form [formGroup]="cardform" novalidate (ngSubmit)="submit(cardform)">
+
+  <div class="form-group">
+    <label>Card Title</label>
+    <input name="cardTitle" type="text" class="form-control" placeholder="Enter title"
+           formControlName="cardTitle"/>
+    <div class="alert alert-danger"
+         *ngIf="cardform.controls['cardTitle'].invalid && cardform.controls['cardTitle'].touched">
+      Empty
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Card subtitle</label>
+    <input name="cardSubtitle" type="text" class="form-control" placeholder="Enter subtitle"
+           formControlName="cardSubtitle"/>
+    <div class="alert alert-danger"
+         *ngIf="cardform.controls['cardSubtitle'].invalid && cardform.controls['cardSubtitle'].touched">
+      Empty
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Card image</label>
+    <input name="cardImg" type="text" class="form-control" placeholder="Enter image link"
+           formControlName="cardImg"/>
+    <div class="alert alert-danger"
+         *ngIf="cardform.controls['cardImg'].invalid && cardform.controls['cardImg'].touched">
+      Empty
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Card description</label>
+    <input name="cardContent" type="text" class="form-control" placeholder="Card description"
+           formControlName="cardContent"/>
+    <div class="alert alert-danger"
+         *ngIf="cardform.controls['cardContent'].invalid && cardform.controls['cardContent'].touched">
+      Empty
+    </div>
+  </div>
+
+  <br/>
+  <div class="form-group">
+    <button [disabled] = 'cardform.invalid' mat-raised-button color="primary">Add Card</button>
+  </div>
+</form>
