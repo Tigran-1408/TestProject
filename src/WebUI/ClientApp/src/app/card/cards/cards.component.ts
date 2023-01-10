@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataDogService} from "../services/DataDogService";
+import {Dog} from "../models/dogModel";
+import {DogClient, DogDto} from "../../web-api-client";
 
 @Component({
   selector: 'app-cards',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CardsComponent implements OnInit {
 
-  constructor() { }
+  dogs: DogDto[] = [];
+
+  constructor(private dogClient: DogClient) {
+  }
 
   ngOnInit(): void {
+    this.dogClient.getAll().subscribe((data: DogDto[]) => this.dogs = data)
   }
 
 }

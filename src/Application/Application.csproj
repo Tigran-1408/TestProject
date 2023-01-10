@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Dog" />
       <Folder Include="Common\Humans" />
       <Folder Include="Common\Humans\Commands\Delete" />
       <Folder Include="Common\Humans\Queries\GetById" />
