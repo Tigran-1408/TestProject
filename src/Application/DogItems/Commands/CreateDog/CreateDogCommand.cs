@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Microsoft.Extensions.DependencyInjection.DogItems.Commands.CreatDog;
 
-public record class CreateDogCommand : IRequest<Result>
+public record CreateDogCommand : IRequest<Result>
 {
     public Guid Id { set; get; }
     public string Name { get; set; }
@@ -14,11 +14,11 @@ public record class CreateDogCommand : IRequest<Result>
     public string Description { get; set; }
 }
 
-public class CreateDogCommandHendler : IRequestHandler<CreateDogCommand, Result>
+public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, Result>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateDogCommandHendler(IApplicationDbContext context)
+    public CreateDogCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }

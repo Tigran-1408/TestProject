@@ -6,6 +6,37 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/Dog/id": {
+      "get": {
+        "tags": [
+          "Dog"
+        ],
+        "operationId": "Dog_GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DogDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Dog": {
       "get": {
         "tags": [
@@ -57,26 +88,12 @@
             }
           }
         }
-      }
-    },
-    "/api/Dog/{id}": {
+      },
       "put": {
         "tags": [
           "Dog"
         ],
         "operationId": "Dog_Update",
-        "parameters": [
-          {
-            "name": "Id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "guid"
-            },
-            "x-position": 1
-          }
-        ],
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -87,7 +104,7 @@
             }
           },
           "required": true,
-          "x-position": 2
+          "x-position": 1
         },
         "responses": {
           "200": {
@@ -102,7 +119,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/Dog/{id}": {
       "delete": {
         "tags": [
           "Dog"
@@ -114,8 +133,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "guid"
             },
             "x-position": 1
           }
@@ -737,8 +756,7 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "string",
-            "format": "guid"
+            "type": "string"
           },
           "name": {
             "type": "string"

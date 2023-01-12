@@ -1,15 +1,25 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using System.Net;
+using CleanArchitecture.Application.Common.Models;
 using CleanArchitecture.Application.TodoItems.Commands.DeleteTodoItem;
+using CleanArchitecture.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection.DogItems.Commands.CreatDog;
+using Microsoft.Extensions.DependencyInjection.DogItems.Commands.DeleteDog;
 using Microsoft.Extensions.DependencyInjection.DogItems.Commands.UpdateDog;
 using Microsoft.Extensions.DependencyInjection.DogItems.Queries;
 using Microsoft.Extensions.DependencyInjection.DogItems.Queries.GetDog;
+using NSwag.Annotations;
 
 namespace CleanArchitecture.WebUI.Controllers;
 
 public class DogController : ApiControllerBase
 {
+    [HttpGet("id")]
+    public async Task<DogDto> GetById(Guid id)
+    {
+        return await Mediator.Send(new GetDogCommand(id));
+    }
+    
     [HttpGet]
     public async Task<IEnumerable<DogDto>> GetAll()
     {
@@ -22,10 +32,10 @@ public class DogController : ApiControllerBase
         return await Mediator.Send(command);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult> Update(Guid Id, UpdateDogCommand command)
+    [HttpPut]
+    public async Task<ActionResult> Update(UpdateDogCommand command)
     {
-        if (Id != command.Id)
+        if (command.Id == Guid.Empty)
         {
             return BadRequest();
         }
@@ -35,9 +45,9 @@ public class DogController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        await Mediator.Send(new DeleteTodoItemCommand(id));
+        await Mediator.Send(new DeleteDogCommand(id));
         return NoContent();
     }
 }

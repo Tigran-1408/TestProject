@@ -41,9 +41,13 @@
       Empty
     </div>
   </div>
+  <div class="form-group">
+    <input name="cardId" hidden formControlName="cardId"/>
+  </div>
+
 
   <br/>
   <div class="form-group">
-    <button [disabled] = 'cardform.invalid' mat-raised-button color="primary">Add Card</button>
+    <button [disabled] = 'cardform.invalid' mat-raised-button color="primary" type="submit">Add Card</button>
   </div>
 </form>
