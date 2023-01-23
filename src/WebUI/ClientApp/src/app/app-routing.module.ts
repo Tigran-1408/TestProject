@@ -10,6 +10,8 @@ import {HumanComponent} from "./human/human.component";
 import {CardComponent} from "./card/card.component";
 import {CardsComponent} from "./card/cards/cards.component";
 import {CardFormComponent} from "./card/card.form/card.form.component";
+import {CitiesComponent} from "./cities/cities.component";
+import {CountriesComponent} from "./countries/countries.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -21,7 +23,9 @@ export const routes: Routes = [
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
   { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
-  { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }
+  { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] },
+  { path: 'cities', component: CitiesComponent },
+  { path: 'countries', component: CountriesComponent}
 ];
 
 @NgModule({

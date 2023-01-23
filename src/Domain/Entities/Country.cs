@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CleanArchitecture.Domain.Entities;
 
@@ -12,8 +13,10 @@ public class Country
     
     public string Name { get; set; }
     
+    [JsonPropertyName("iso2")]
     public string ISO2 { get; set; }
     
+    [JsonPropertyName("iso3")]
     public string ISO3 { get; set; }
     
     public virtual List<City> Cities { get; set; }

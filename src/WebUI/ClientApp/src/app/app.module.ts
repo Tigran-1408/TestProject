@@ -19,6 +19,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from "@angular/material/card";
 import {CardModule} from './card/card.module';
+import { CitiesComponent } from './cities/cities.component';
+import {AngularMaterialModule} from "./angular-material.module";
+import { CountriesComponent } from './countries/countries.component';
 
 
 @NgModule({
@@ -31,6 +34,8 @@ import {CardModule} from './card/card.module';
     FetchDataComponent,
     TodoComponent,
     TokenComponent,
+    CitiesComponent,
+    CountriesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -45,6 +50,7 @@ import {CardModule} from './card/card.module';
     ReactiveFormsModule,
     MatCardModule,
     CardModule,
+    AngularMaterialModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true},
