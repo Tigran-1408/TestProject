@@ -81,6 +81,7 @@ namespace CleanArchitecture.WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult<City>> PostCity(City city)
         {
+            Console.Error.WriteLine(city.Id);
             _context.Cities.Add(city);
             await _context.SaveChangesAsync();
 
@@ -104,6 +105,18 @@ namespace CleanArchitecture.WebUI.Controllers
         private bool CityExists(int id)
         {
             return _context.Cities.Any(c => c.Id == id);
+        }
+
+        [HttpPost]
+        [Route("IsDupeCity")]
+        public bool IsDupeCity(City city)
+        {
+            return _context.Cities.Any(c =>
+                c.Id == city.Id &&
+                c.Name == city.Name &&
+                c.Lon == city.Lon &&
+                c.Lat == city.Lat &&
+                c.CountryId == city.CountryId);
         }
     }
 }

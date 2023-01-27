@@ -3,6 +3,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -10,13 +11,15 @@ import {MatInputModule} from "@angular/material/input";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   exports: [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ]
 })
 

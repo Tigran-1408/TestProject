@@ -22,6 +22,8 @@ import {CardModule} from './card/card.module';
 import { CitiesComponent } from './cities/cities.component';
 import {AngularMaterialModule} from "./angular-material.module";
 import { CountriesComponent } from './countries/countries.component';
+import { CityEditComponent } from './cities/city-edit/city-edit.component';
+import { CountryEditComponent } from './countries/country-edit/country-edit.component';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { CountriesComponent } from './countries/countries.component';
     TokenComponent,
     CitiesComponent,
     CountriesComponent,
+    CityEditComponent,
+    CountryEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -51,6 +55,7 @@ import { CountriesComponent } from './countries/countries.component';
     MatCardModule,
     CardModule,
     AngularMaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true},

@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using System.Linq.Dynamic.Core;
+using CleanArchitecture.Application.Common.Models;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace CleanArchitecture.WebUI.Controllers
         {
             _context = context;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<ApiResult<Country>>> GetCountries(
             int pageIndex = 0,
@@ -104,6 +105,27 @@ namespace CleanArchitecture.WebUI.Controllers
         private bool CountryExists(int id)
         {
             return _context.Countries.Any(c => c.Id == id);
+        }
+
+        [HttpPost]
+        [Route("IsDupeField")]
+        public bool IsDupeField(int countryId, string fieldName, string fieldValue)
+        {
+            /*switch (fieldName)
+            {
+                case "name":
+                    return _context.Countries.Any(c => c.Name == fieldValue && c.Id != countryId);
+                case "iso2":
+                    return _context.Countries.Any(c => c.ISO2 == fieldValue && c.Id != countryId);
+                case "iso3":
+                    return _context.Countries.Any(c => c.ISO3 == fieldValue && c.Id != countryId);
+                default:
+                    return false;
+            }*/
+            
+            // Alternative approach (using System.Linq.Dynamic.Core)
+            return (ApiResult<Country>.IsValidProperty(fieldName, true)) ? 
+                _context.Countries.Any(String.Format("{0} == @0 && Id != @1", fieldName), fieldValue, countryId) : false;
         }
     }
 }

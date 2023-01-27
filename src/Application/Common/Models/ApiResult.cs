@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.Application.Common.Models;
 
@@ -53,7 +54,7 @@ public class ApiResult<T>
     {
         if (!String.IsNullOrEmpty(filterColumn) && !String.IsNullOrEmpty(filterQuery) && IsValidProperty(filterColumn))
         {
-            source = source.Where(String.Format("{0}.Contains(@0)", filterColumn, filterQuery));
+            source = source.Where(String.Format("{0}.Contains(@0)",filterColumn),filterQuery);
         }
 
         var count = await source.CountAsync();
