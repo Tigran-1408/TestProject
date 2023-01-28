@@ -21,6 +21,7 @@ export interface ICitiesClient {
     getCity(id: number): Observable<City>;
     putCity(id: number, city: City): Observable<FileResponse>;
     deleteCity(id: number): Observable<City>;
+    isDupeCity(city: City): Observable<boolean>;
 }
 
 @Injectable({
@@ -306,6 +307,59 @@ export class CitiesClient implements ICitiesClient {
         }
         return _observableOf(null as any);
     }
+
+    isDupeCity(city: City): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Cities/IsDupeCity";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(city);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processIsDupeCity(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processIsDupeCity(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processIsDupeCity(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 export interface ICountriesClient {
@@ -314,6 +368,7 @@ export interface ICountriesClient {
     getCountry(id: number): Observable<Country>;
     putCountry(id: number, country: Country): Observable<FileResponse>;
     deleteCountry(id: number): Observable<Country>;
+    isDupeField(countryId: number | undefined, fieldName: string | null | undefined, fieldValue: string | null | undefined): Observable<boolean>;
 }
 
 @Injectable({
@@ -590,6 +645,63 @@ export class CountriesClient implements ICountriesClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = Country.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    isDupeField(countryId: number | undefined, fieldName: string | null | undefined, fieldValue: string | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Countries/IsDupeField?";
+        if (countryId === null)
+            throw new Error("The parameter 'countryId' cannot be null.");
+        else if (countryId !== undefined)
+            url_ += "countryId=" + encodeURIComponent("" + countryId) + "&";
+        if (fieldName !== undefined && fieldName !== null)
+            url_ += "fieldName=" + encodeURIComponent("" + fieldName) + "&";
+        if (fieldValue !== undefined && fieldValue !== null)
+            url_ += "fieldValue=" + encodeURIComponent("" + fieldValue) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processIsDupeField(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processIsDupeField(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processIsDupeField(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {

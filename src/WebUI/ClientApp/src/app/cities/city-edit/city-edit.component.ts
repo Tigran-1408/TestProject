@@ -6,13 +6,14 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Country} from '../../countries/models/country';
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {BaseFormComponent} from "../../base.form.component";
 
 @Component({
   selector: 'app-city-edit',
   templateUrl: './city-edit.component.html',
   styleUrls: ['./city-edit.component.scss']
 })
-export class CityEditComponent implements OnInit {
+export class CityEditComponent extends BaseFormComponent implements OnInit {
   title: string;
   form: FormGroup;
   city: City;
@@ -25,6 +26,7 @@ export class CityEditComponent implements OnInit {
     private http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
   ) {
+    super();
   }
 
   ngOnInit() {

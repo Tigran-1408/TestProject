@@ -24,6 +24,7 @@ import {AngularMaterialModule} from "./angular-material.module";
 import { CountriesComponent } from './countries/countries.component';
 import { CityEditComponent } from './cities/city-edit/city-edit.component';
 import { CountryEditComponent } from './countries/country-edit/country-edit.component';
+import { BaseFormComponent } from './base.form.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { CountryEditComponent } from './countries/country-edit/country-edit.comp
     CitiesComponent,
     CountriesComponent,
     CityEditComponent,
-    CountryEditComponent
+    CountryEditComponent,
+    BaseFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
