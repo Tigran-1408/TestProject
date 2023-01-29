@@ -363,7 +363,7 @@ export class CitiesClient implements ICitiesClient {
 }
 
 export interface ICountriesClient {
-    getCountries(pageIndex: number | undefined, pageSize: number | undefined, sortColumn: string | null | undefined, sortOrder: string | null | undefined, filterColumn: string | null | undefined, filterQuery: string | null | undefined): Observable<ApiResultOfCountry>;
+    getCountries(pageIndex: number | undefined, pageSize: number | undefined, sortColumn: string | null | undefined, sortOrder: string | null | undefined, filterColumn: string | null | undefined, filterQuery: string | null | undefined): Observable<ApiResultOfCountryDTO>;
     postCountry(country: Country): Observable<Country>;
     getCountry(id: number): Observable<Country>;
     putCountry(id: number, country: Country): Observable<FileResponse>;
@@ -384,7 +384,7 @@ export class CountriesClient implements ICountriesClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getCountries(pageIndex: number | undefined, pageSize: number | undefined, sortColumn: string | null | undefined, sortOrder: string | null | undefined, filterColumn: string | null | undefined, filterQuery: string | null | undefined): Observable<ApiResultOfCountry> {
+    getCountries(pageIndex: number | undefined, pageSize: number | undefined, sortColumn: string | null | undefined, sortOrder: string | null | undefined, filterColumn: string | null | undefined, filterQuery: string | null | undefined): Observable<ApiResultOfCountryDTO> {
         let url_ = this.baseUrl + "/api/Countries?";
         if (pageIndex === null)
             throw new Error("The parameter 'pageIndex' cannot be null.");
@@ -419,14 +419,14 @@ export class CountriesClient implements ICountriesClient {
                 try {
                     return this.processGetCountries(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResultOfCountry>;
+                    return _observableThrow(e) as any as Observable<ApiResultOfCountryDTO>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ApiResultOfCountry>;
+                return _observableThrow(response_) as any as Observable<ApiResultOfCountryDTO>;
         }));
     }
 
-    protected processGetCountries(response: HttpResponseBase): Observable<ApiResultOfCountry> {
+    protected processGetCountries(response: HttpResponseBase): Observable<ApiResultOfCountryDTO> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -437,7 +437,7 @@ export class CountriesClient implements ICountriesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResultOfCountry.fromJS(resultData200);
+            result200 = ApiResultOfCountryDTO.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2050,8 +2050,8 @@ export interface ICountry {
     cities?: City[];
 }
 
-export class ApiResultOfCountry implements IApiResultOfCountry {
-    data?: Country[];
+export class ApiResultOfCountryDTO implements IApiResultOfCountryDTO {
+    data?: CountryDTO[];
     pageIndex?: number;
     pageSize?: number;
     totalCount?: number;
@@ -2063,7 +2063,7 @@ export class ApiResultOfCountry implements IApiResultOfCountry {
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
 
-    constructor(data?: IApiResultOfCountry) {
+    constructor(data?: IApiResultOfCountryDTO) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2077,7 +2077,7 @@ export class ApiResultOfCountry implements IApiResultOfCountry {
             if (Array.isArray(_data["data"])) {
                 this.data = [] as any;
                 for (let item of _data["data"])
-                    this.data!.push(Country.fromJS(item));
+                    this.data!.push(CountryDTO.fromJS(item));
             }
             this.pageIndex = _data["pageIndex"];
             this.pageSize = _data["pageSize"];
@@ -2092,9 +2092,9 @@ export class ApiResultOfCountry implements IApiResultOfCountry {
         }
     }
 
-    static fromJS(data: any): ApiResultOfCountry {
+    static fromJS(data: any): ApiResultOfCountryDTO {
         data = typeof data === 'object' ? data : {};
-        let result = new ApiResultOfCountry();
+        let result = new ApiResultOfCountryDTO();
         result.init(data);
         return result;
     }
@@ -2120,8 +2120,8 @@ export class ApiResultOfCountry implements IApiResultOfCountry {
     }
 }
 
-export interface IApiResultOfCountry {
-    data?: Country[];
+export interface IApiResultOfCountryDTO {
+    data?: CountryDTO[];
     pageIndex?: number;
     pageSize?: number;
     totalCount?: number;
@@ -2132,6 +2132,58 @@ export interface IApiResultOfCountry {
     filterQuery?: string;
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
+}
+
+export class CountryDTO implements ICountryDTO {
+    id?: number;
+    name?: string;
+    iso2?: string;
+    iso3?: string;
+    totalCities?: number;
+
+    constructor(data?: ICountryDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.iso2 = _data["iso2"];
+            this.iso3 = _data["iso3"];
+            this.totalCities = _data["totalCities"];
+        }
+    }
+
+    static fromJS(data: any): CountryDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountryDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["iso2"] = this.iso2;
+        data["iso3"] = this.iso3;
+        data["totalCities"] = this.totalCities;
+        return data;
+    }
+}
+
+export interface ICountryDTO {
+    id?: number;
+    name?: string;
+    iso2?: string;
+    iso3?: string;
+    totalCities?: number;
 }
 
 export class DogDto implements IDogDto {

@@ -4,6 +4,7 @@ using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Common.Country.Common;
 
 namespace CleanArchitecture.WebUI.Controllers
 {
@@ -28,7 +29,14 @@ namespace CleanArchitecture.WebUI.Controllers
             string filterQuery = null)
         {
             return await ApiResult<Country>.CreateAsync(
-                _context.Countries,
+                _context.Countries.Select(c => new Country()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ISO2 = c.ISO2,
+                    ISO3 = c.ISO3,
+                    TotCities = c.Cities.Count
+                }),
                 pageIndex,
                 pageSize,
                 sortColumn,
@@ -122,10 +130,11 @@ namespace CleanArchitecture.WebUI.Controllers
                 default:
                     return false;
             }*/
-            
+
             // Alternative approach (using System.Linq.Dynamic.Core)
-            return (ApiResult<Country>.IsValidProperty(fieldName, true)) ? 
-                _context.Countries.Any(String.Format("{0} == @0 && Id != @1", fieldName), fieldValue, countryId) : false;
+            return (ApiResult<Country>.IsValidProperty(fieldName, true))
+                ? _context.Countries.Any(String.Format("{0} == @0 && Id != @1", fieldName), fieldValue, countryId)
+                : false;
         }
     }
 }
