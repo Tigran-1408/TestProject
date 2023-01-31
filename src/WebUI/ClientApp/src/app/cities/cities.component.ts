@@ -1,9 +1,12 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {City} from "./models/city";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatSort, SortDirection} from "@angular/material/sort";
+
+import {City} from "./models/city";
+import { CityService } from './services/city.service';
+import { ApiResult} from '../base.service'
+
 
 @Component({
   selector: 'app-cities',
@@ -26,8 +29,8 @@ export class CitiesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string) {
+    private cityService: CityService
+  ) {
   }
 
   ngOnInit() {
@@ -45,20 +48,20 @@ export class CitiesComponent implements OnInit {
   }
 
   getData(event: PageEvent) {
-    let url = this.baseUrl + 'api/Cities';
-    let params = new HttpParams()
-      .set('pageIndex', event.pageIndex.toString())
-      .set('pageSize', event.pageSize.toString())
-      .set('sortColumn', (this.sort) ? this.sort.active : this.defaultSortColumn)
-      .set('sortOrder', (this.sort) ? this.sort.direction : this.defaultSortOrder);
 
-    if (this.filterQuery) {
-      params = params
-        .set('filterColumn', this.defaultFilterColumn)
-        .set('filterQuery', this.filterQuery)
-    }
+    let sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
+    let sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
+    let filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
+    let filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
-    this.http.get<any>(url, {params})
+    this.cityService.getData<ApiResult<City>>(
+      event.pageIndex,
+      event.pageSize,
+      sortColumn,
+      sortOrder,
+      filterColumn,
+      filterQuery
+    )
       .subscribe(result => {
           this.paginator.length = result.totalCount;
           this.paginator.pageIndex = result.pageIndex;
